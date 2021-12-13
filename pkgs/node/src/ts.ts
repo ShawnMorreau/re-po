@@ -9,7 +9,7 @@ import {
     ensureDir
 } from "./fs.js"
 import ts, { ParseConfigFileHost } from "typescript"
-import { mergeAll, toString } from "@re-/utils"
+import { mergeAll, toString } from "@re-do/utils"
 
 export type TsConfig = {
     [K in keyof ts.CompilerOptions]: any

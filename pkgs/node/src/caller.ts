@@ -1,6 +1,6 @@
 import path from "path"
 import getCurrentLine from "get-current-line"
-import { LinePosition, narrow, deepEquals, toString } from "@re-/utils"
+import { LinePosition, narrow, deepEquals, toString } from "@re-do/utils"
 
 export type SourcePosition = LinePosition & {
     file: string

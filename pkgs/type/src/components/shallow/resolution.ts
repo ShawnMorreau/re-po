@@ -1,4 +1,4 @@
-import { IsAny, IsAnyOrUnknown, Or as LogicalOr } from "@re-/utils"
+import { IsAny, IsAnyOrUnknown, Or as LogicalOr } from "@re-do/utils"
 import {
     ParseConfig,
     typeDefProxy,

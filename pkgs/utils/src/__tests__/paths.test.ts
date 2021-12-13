@@ -1,3 +1,4 @@
+import { expectError } from "tsd"
 import { valueAtPath } from ".."
 
 const obj = {

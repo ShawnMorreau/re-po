@@ -4,7 +4,7 @@ import {
     ListPossibleTypes,
     Split,
     WithDefaults
-} from "@re-/utils"
+} from "@re-do/utils"
 import { Root, Shallow } from "./components"
 
 type ControlCharacters = ["|", "?", "(", ")", ",", "[", "]", "=", ">", " "]

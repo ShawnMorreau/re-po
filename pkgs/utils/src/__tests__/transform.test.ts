@@ -1,4 +1,4 @@
-import { assert } from "@re-do/assert"
+import { expectType } from "tsd"
 import { EntryMapper, transform } from ".."
 
 const o = {
@@ -77,7 +77,8 @@ describe("transform", () => {
             i,
             !v
         ])
-        assert(inferredAsArrayResult).equals([false, true]).typed as boolean[]
+        expectType<boolean[]>(inferredAsArrayResult)
+        expect(inferredAsArrayResult).toStrictEqual([false, true])
     })
     test("explicitly infer array", () => {
         const specifiedInferArrayResult = transform(
@@ -85,8 +86,8 @@ describe("transform", () => {
             ([i, v]) => [i, !v],
             { asArray: "infer" }
         )
-        assert(specifiedInferArrayResult).equals([false, true])
-            .typed as boolean[]
+        expectType<boolean[]>(specifiedInferArrayResult)
+        expect(specifiedInferArrayResult).toStrictEqual([false, true])
     })
     test("force record", () => {
         const specifiedAsArrayResult = transform(
@@ -96,14 +97,14 @@ describe("transform", () => {
                 asArray: "never"
             }
         )
-        assert(specifiedAsArrayResult).equals({ 0: false, 1: true }).typed as {
-            [x: number]: boolean
-        }
+        expectType<Record<number, boolean>>(specifiedAsArrayResult)
+        expect(specifiedAsArrayResult).toStrictEqual({ 0: false, 1: true })
     })
     test("force array", () => {
         const result = transform({ a: 3.14, b: 159 }, ([k, v]) => [k, `${v}`], {
             asArray: "always"
         })
-        assert(result).equals(["3.14", "159"]).typed as string[]
+        expectType<string[]>(result)
+        expect(result).toStrictEqual(["3.14", "159"])
     })
 })

@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
     "rushVersion": "5.56.0",
-    "pnpmVersion": "6.23.6",
+    "pnpmVersion": "6.23.2",
     "pnpmOptions": {
         "useWorkspaces": true
     },
@@ -9,35 +9,90 @@
     "suppressNodeLtsWarning": true,
     "ensureConsistentVersions": true,
     "repository": {
-        "url": "https://github.com/re-do/dev",
-        "defaultBranch": "main"
+        "url": "https://github.com/re-do/redo"
     },
     "projects": [
         {
-            "packageName": "@re-/node",
-            "projectFolder": "pkgs/node",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@re-/utils",
+            "packageName": "@re-do/utils",
             "projectFolder": "pkgs/utils",
-            "cyclicDependencyProjects": ["@re-/node", "@re-/assert"],
             "shouldPublish": true
         },
         {
-            "packageName": "@re-/assert",
-            "projectFolder": "pkgs/assert",
+            "packageName": "statelessly",
+            "projectFolder": "pkgs/statelessly",
             "shouldPublish": true
         },
         {
-            "packageName": "@re-/type",
+            "packageName": "react-statelessly",
+            "projectFolder": "pkgs/react-statelessly",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "persist-statelessly",
+            "projectFolder": "pkgs/persist-statelessly",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/model",
+            "projectFolder": "pkgs/model",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/components",
+            "projectFolder": "pkgs/components",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/run",
+            "projectFolder": "pkgs/run",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/node",
+            "projectFolder": "pkgs/node",
+            "shouldPublish": true,
+            "cyclicDependencyProjects": ["@re-do/utils"]
+        },
+        {
+            "packageName": "@re-do/data",
+            "projectFolder": "pkgs/data",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/scripts",
+            "projectFolder": "pkgs/scripts",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/state",
+            "projectFolder": "pkgs/state"
+        },
+        {
+            "packageName": "@re-do/type",
             "projectFolder": "pkgs/type",
             "shouldPublish": true
         },
         {
-            "packageName": "@re-/docs",
-            "projectFolder": "pkgs/docs",
-            "shouldPublish": false
+            "packageName": "@re-do/test",
+            "projectFolder": "pkgs/test",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/assert",
+            "projectFolder": "pkgs/assert",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@re-do/website",
+            "projectFolder": "pkgs/website"
+        },
+        {
+            "packageName": "@re-do/docs",
+            "projectFolder": "pkgs/docs"
+        },
+        {
+            "packageName": "@re-do/app",
+            "projectFolder": "pkgs/app"
         }
     ]
 }

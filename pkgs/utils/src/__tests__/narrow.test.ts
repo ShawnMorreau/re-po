@@ -1,32 +1,31 @@
-import { narrow } from ".."
-import { assert } from "@re-do/assert"
+import { Narrow, narrow } from ".."
+import { expectType } from "tsd"
 
 describe("Narrow", () => {
     test("literals", () => {
-        assert(narrow("ok")).typed as "ok"
-        assert(
-            narrow({
-                nested: { string: "narrowed", number: 1337 }
-            })
-        ).typed as { nested: { string: "narrowed"; number: 1337 } }
+        const single = narrow("ok")
+        expectType<"ok">(single)
+        const result = narrow({
+            nested: { string: "narrowed", number: 1337 }
+        })
+        expectType<{ nested: { string: "narrowed"; number: 1337 } }>(result)
     })
     test("arrays", () => {
-        assert(narrow([{ first: "narrowed" }, { second: 1337 }])).typed as [
-            { first: "narrowed" },
-            { second: 1337 }
-        ]
-        assert(narrow({ nested: ["yeah", { good: "okay" }] })).typed as {
-            nested: ["yeah", { good: "okay" }]
-        }
+        const result = narrow([{ first: "narrowed" }, { second: 1337 }])
+        expectType<[{ first: "narrowed" }, { second: 1337 }]>(result)
+        const nestedArray = narrow({ nested: ["yeah", { good: "okay" }] })
+        expectType<{ nested: ["yeah", { good: "okay" }] }>(nestedArray)
     })
     test("function", () => {
         // Function return values can't be narrowed
-        assert(narrow((args: -1) => 1)).typed as (args: -1) => number
-        assert(narrow((...args: [["hi", 5], { a: "nother" }]) => {})).typed as (
-            args_0: ["hi", 5],
-            args_1: {
+        expectType<(args: -1) => number>(narrow((args: -1) => 1))
+        const result = narrow((...args: [["hi", 5], { a: "nother" }]) => {})
+        type Expected = (
+            a: ["hi", 5],
+            b: {
                 a: "nother"
             }
         ) => void
+        expectType<Expected>(result)
     })
 })

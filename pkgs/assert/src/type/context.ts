@@ -1,4 +1,4 @@
-import { SourcePosition } from "@re-/node"
+import { SourcePosition } from "@re-do/node"
 import { nextTypeToString, errorsOfNextType } from "./types.js"
 import { expect } from "@jest/globals"
 import {

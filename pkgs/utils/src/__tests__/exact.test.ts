@@ -1,119 +1,104 @@
 import { DeepEvaluate, Exact, ExactObject } from ".."
-import { assert } from "@re-do/assert"
+import { expectType } from "tsd"
 
 describe("exact", () => {
     test("exact", () => {
-        assert(
-            {} as DeepEvaluate<
-                Exact<
-                    { a: "ok"; nested: { on: true } },
-                    { a: "hi"; nested: { on: false } }
-                >
+        const noMatch = {} as DeepEvaluate<
+            Exact<
+                { a: "ok"; nested: { on: true } },
+                { a: "hi"; nested: { on: false } }
             >
-        ).typed as {
-            a: "hi"
-            nested: {
-                on: false
-            }
-        }
-        assert(
-            {} as DeepEvaluate<
-                Exact<
-                    { a: "ok"; nested: { on: true } },
-                    { a: string; nested: { on: boolean } }
-                >
+        >
+        expectType<{ a: "hi"; nested: { on: false } }>(noMatch)
+        const match = {} as DeepEvaluate<
+            Exact<
+                { a: "ok"; nested: { on: true } },
+                { a: string; nested: { on: boolean } }
             >
-        ).typed as { a: "ok"; nested: { on: true } }
+        >
+        expectType<{ a: "ok"; nested: { on: true } }>(match)
     })
 
     test("unions", () => {
-        assert(
-            {} as DeepEvaluate<
-                Exact<{ a: string | number }, { a: string | number | boolean }>
-            >
-        ).typed as { a: string | number }
-        assert(
-            {} as DeepEvaluate<
-                Exact<{ a: string | number | boolean }, { a: string | number }>
-            >
-        ).typed as { a: string | number }
+        const subset = {} as DeepEvaluate<
+            Exact<{ a: string | number }, { a: string | number | boolean }>
+        >
+        expectType<{ a: string | number }>(subset)
+        const superset = {} as DeepEvaluate<
+            Exact<{ a: string | number | boolean }, { a: string | number }>
+        >
+        expectType<{ a: string | number }>(superset)
     })
 
     test("optional", () => {
-        assert(
-            {} as DeepEvaluate<
-                Exact<{ a: { nested: true } }, { a?: { nested: boolean } }>
-            >
-        ).typed as { a: { nested: true } }
+        const first = {} as DeepEvaluate<
+            Exact<{ a: { nested: true } }, { a?: { nested: boolean } }>
+        >
+        expectType<{ a: { nested: true } }>(first)
     })
 })
 
 describe("exact object", () => {
     test("exact", () => {
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: "ok"; nested: { on: true } },
-                    { a: "hi"; nested: { on: false } }
-                >
+        const noMatch = {} as DeepEvaluate<
+            ExactObject<
+                { a: "ok"; nested: { on: true } },
+                { a: "hi"; nested: { on: false } }
             >
-        ).typed as { a: "hi"; nested: { on: false } }
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: "ok"; nested: { on: true } },
-                    { a: string; nested: { on: boolean } }
-                >
+        >
+        expectType<{ a: "hi"; nested: { on: false } }>(noMatch)
+        const match = {} as DeepEvaluate<
+            ExactObject<
+                { a: "ok"; nested: { on: true } },
+                { a: string; nested: { on: boolean } }
             >
-        ).typed as { a: "ok"; nested: { on: true } }
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: string; nested: { on: true } },
-                    { a: "hi"; nested: { on: boolean } }
-                >
+        >
+        expectType<{ a: "ok"; nested: { on: true } }>(match)
+        const mixed = {} as DeepEvaluate<
+            ExactObject<
+                { a: string; nested: { on: true } },
+                { a: "hi"; nested: { on: boolean } }
             >
-        ).typed as { a: "hi"; nested: { on: true } }
+        >
+        expectType<{ a: "hi"; nested: { on: true } }>(mixed)
     })
 
     test("extra keys", () => {
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: "hi"; nested: { a: "hello"; b: "hey"; c: "ayo" } },
-                    {
-                        a?: string | boolean | undefined
-                        nested?: { a?: string | number }
-                    }
-                >
+        const result = {} as DeepEvaluate<
+            ExactObject<
+                { a: "hi"; nested: { a: "hello"; b: "hey"; c: "ayo" } },
+                {
+                    a?: string | boolean | undefined
+                    nested?: { a?: string | number }
+                }
             >
-        ).typed as {
+        >
+        expectType<{
             a: "hi"
             nested: {
                 a: "hello"
                 b: "Invalid property 'b'. Valid properties are: a"
                 c: "Invalid property 'c'. Valid properties are: a"
             }
-        }
+        }>(result)
     })
 
     test("missing keys", () => {
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: "hi"; nested: { a: "hello" } },
-                    {
-                        a?: string | boolean | undefined
-                        nested?: {
-                            a: string | number
-                            b: string | null
-                            c: string | boolean
-                        }
-                        c: "this is required"
+        const result = {} as DeepEvaluate<
+            ExactObject<
+                { a: "hi"; nested: { a: "hello" } },
+                {
+                    a?: string | boolean | undefined
+                    nested?: {
+                        a: string | number
+                        b: string | null
+                        c: string | boolean
                     }
-                >
+                    c: "this is required"
+                }
             >
-        ).typed as {
+        >
+        expectType<{
             a: "hi"
             nested: {
                 a: "hello"
@@ -121,47 +106,39 @@ describe("exact object", () => {
                 c: string | boolean
             }
             c: "this is required"
-        }
+        }>(result)
     })
 
     test("any/unknown", () => {
-        assert({} as DeepEvaluate<Exact<{ a: any }, { a: string }>>).typed as {
-            a: string
-        }
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<{ a: { b: "nested" } }, { a: unknown }>
-            >
-        ).typed as { a: { b: "nested" } }
+        const first = {} as DeepEvaluate<Exact<{ a: any }, { a: string }>>
+        expectType<{ a: string }>(first)
+        const second = {} as DeepEvaluate<
+            ExactObject<{ a: { b: "nested" } }, { a: unknown }>
+        >
+        expectType<{ a: { b: "nested" } }>(second)
     })
 
     test("unions", () => {
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: string | number },
-                    { a: string | number | boolean }
-                >
+        const subset = {} as DeepEvaluate<
+            ExactObject<
+                { a: string | number },
+                { a: string | number | boolean }
             >
-        ).typed as { a: string | number }
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: string | number | boolean },
-                    { a: string | number }
-                >
+        >
+        expectType<{ a: string | number }>(subset)
+        const superset = {} as DeepEvaluate<
+            ExactObject<
+                { a: string | number | boolean },
+                { a: string | number }
             >
-        ).typed as { a: string | number }
+        >
+        expectType<{ a: string | number }>(superset)
     })
 
     test("optional", () => {
-        assert(
-            {} as DeepEvaluate<
-                ExactObject<
-                    { a: { nested: "yar" } },
-                    { a?: { nested: string } }
-                >
-            >
-        ).typed as { a: { nested: "yar" } }
+        const first = {} as DeepEvaluate<
+            ExactObject<{ a: { nested: "yar" } }, { a?: { nested: string } }>
+        >
+        expectType<{ a: { nested: "yar" } }>(first)
     })
 })

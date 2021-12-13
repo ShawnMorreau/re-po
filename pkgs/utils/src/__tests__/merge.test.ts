@@ -1,72 +1,70 @@
-import { assert } from "@re-do/assert"
-import { Evaluate, merge, mergeAll, narrow } from ".."
+import { expectType } from "tsd"
+import { Evaluate, merge, mergeAll } from ".."
 
 test("mergeAll shallow", () => {
-    const expected = narrow({ a: "fromA", b: "fromB", c: "fromC" })
-    assert(
-        mergeAll([
-            { a: "fromA", b: "fromA" },
-            { b: "fromB", c: "fromB" },
-            { c: "fromC" }
-        ])
-    ).typedValue(expected)
+    const result = mergeAll([
+        { a: "fromA", b: "fromA" },
+        { b: "fromB", c: "fromB" },
+        { c: "fromC" }
+    ])
+    expectType<{ a: "fromA"; b: "fromB"; c: "fromC" }>(result)
+    expect(result).toStrictEqual({ a: "fromA", b: "fromB", c: "fromC" })
 })
 
 test("merge shallow", () => {
-    assert(
-        merge({ a: "fromA", b: "fromA" } as { a?: "fromA"; b?: "fromA" }, {
-            b: "fromB",
-            c: "fromB"
-        })
-    ).equals({
-        a: "fromA",
-        b: "fromB",
-        c: "fromB"
-    }).typed as {
+    const result = merge(
+        { a: "fromA", b: "fromA" } as { a?: "fromA"; b?: "fromA" },
+        { b: "fromB", c: "fromB" }
+    )
+    expectType<{
         a?: "fromA"
         b: "fromB"
         c: "fromB"
-    }
+    }>(result)
+    expect(result).toStrictEqual({
+        a: "fromA",
+        b: "fromB",
+        c: "fromB"
+    })
 })
 
 test("merge string and numeric keys", () => {
-    const expected = { 1: true as true }
-    assert(merge({ "1": false }, { 1: true })).typedValue(expected)
-    assert(merge({ 1: false }, { "1": true })).typedValue(expected)
+    const mergeNumeric = merge({ "1": false }, { 1: true })
+    expectType<{ 1: true }>(mergeNumeric)
+    expect(mergeNumeric).toStrictEqual({ 1: true })
+    const mergeString = merge({ 1: false }, { "1": true })
+    expectType<{ 1: true }>(mergeString)
+    expect(mergeString).toStrictEqual({ 1: true })
 })
 
 test("merge exclude values", () => {
-    const expected = narrow({ a: "defined" })
     // undefined excluded by default
-    assert(merge({ a: "defined" }, { a: undefined })).typedValue(expected)
-    assert(
-        merge({ a: "defined" }, { a: true }, { unmerged: [true] })
-    ).typedValue(expected)
+    const result = merge({ a: "defined" }, { a: undefined })
+    expectType<{ a: "defined" }>(result)
+    expect(result).toStrictEqual({ a: "defined" })
+    const second = merge({ a: "string" }, { a: true }, { unmerged: [true] })
+    expectType<{ a: "string" }>(second)
+    expect(second).toStrictEqual({ a: "string" })
 })
 
 test("deep merge", () => {
-    assert(
-        merge(
-            {
-                nested: { a: "fromA", b: "fromA" } as {
-                    a?: "fromA"
-                    b?: "fromA"
-                }
-            },
-            { nested: { b: "fromB", c: "fromB" } },
-            { deep: true }
-        )
-    ).equals({
-        nested: {
-            a: "fromA",
-            b: "fromB",
-            c: "fromB"
-        }
-    }).typed as {
+    const result = merge(
+        { nested: { a: "fromA", b: "fromA" } as { a?: "fromA"; b?: "fromA" } },
+        { nested: { b: "fromB", c: "fromB" } },
+        { deep: true }
+    )
+    expectType<{
         nested: {
             a?: "fromA"
             b: "fromB"
             c: "fromB"
         }
-    }
+    }>(result)
+    expect(result).toStrictEqual({
+        nested: {
+            a: "fromA",
+            b: "fromB",
+            c: "fromB"
+        }
+    })
 })

@@ -1,4 +1,4 @@
-import { Func } from "@re-/utils"
+import { Func } from "@re-do/utils"
 import { parse, typeOf } from ".."
 
 describe("typeOf", () => {

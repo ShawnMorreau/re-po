@@ -1,11 +1,11 @@
 {
-    "name": "@re-/utils",
-    "version": "1.2.0",
-    "author": "redo.dev",
+    "name": "@re-do/utils",
+    "version": "1.1.2",
+    "author": "redo.qa",
     "description": "Common utilities consumed by Redo",
     "repository": {
         "type": "git",
-        "url": "https://github.com/re-do/dev.git",
+        "url": "https://github.com/re-do/redo.git",
         "directory": "pkgs/utils"
     },
     "type": "module",
@@ -23,16 +23,19 @@
         "test": "jest"
     },
     "dependencies": {
+        "deepmerge": "4.2.2",
         "moize": "5.4.7",
-        "ts-toolbelt": "9.5.10"
+        "process": "0.11.10",
+        "ts-toolbelt": "9.5.10",
+        "fast-deep-equal": "3.1.3"
     },
     "devDependencies": {
-        "@re-do/node": "1.1.0",
-        "@re-do/assert": "0.1.0",
-        "@types/node": "16.11.12",
+        "@re-do/node": "workspace:*",
+        "@types/node": "15.0.2",
         "jest": "27.4.3",
         "@types/jest": "26.0.24",
         "ts-jest": "27.0.7",
-        "typescript": "4.5.2"
+        "typescript": "4.5.2",
+        "tsd": "0.17.0"
     }
 }

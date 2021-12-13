@@ -1,7 +1,7 @@
-import { findPackageRoot, mapFilesToContents } from "@re-/node"
+import { findPackageRoot, mapFilesToContents } from "@re-do/node"
 import { dirname, join, relative } from "path"
 import typescript from "typescript"
-import { memoize, print, toString } from "@re-/utils"
+import { memoize, print, toString } from "@re-do/utils"
 
 // Absolute file paths TS will parse to raw contents
 export type ContentsByFile = Record<string, string>

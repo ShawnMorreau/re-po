@@ -1,4 +1,4 @@
-import { transform } from "@re-/utils"
+import { transform } from "@re-do/utils"
 import {
     ExtractableDefinition,
     ExtractableTypeName

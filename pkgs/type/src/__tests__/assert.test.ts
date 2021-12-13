@@ -1,4 +1,4 @@
-import { assert } from "@re-/assert"
+import { assert } from "@re-do/assert"
 
 beforeAll(() => {
     /**

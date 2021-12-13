@@ -1,11 +1,11 @@
 {
-    "name": "@re-/assert",
-    "version": "0.1.0",
+    "name": "@re-do/assert",
+    "version": "0.0.1",
     "author": "redo.dev",
     "description": "Value and type assertions for unit tests",
     "repository": {
         "type": "git",
-        "url": "https://github.com/re-do/dev.git",
+        "url": "https://github.com/re-do/redo.git",
         "directory": "pkgs/assert"
     },
     "type": "module",
@@ -23,8 +23,8 @@
         "test": "jest"
     },
     "dependencies": {
-        "@re-/utils": "workspace:*",
-        "@re-/node": "workspace:*",
+        "@re-do/utils": "workspace:*",
+        "@re-do/node": "workspace:*",
         "@jest/globals": "27.4.2",
         "jest-snapshot": "27.4.2",
         "jest": "27.4.3"
@@ -32,7 +32,7 @@
     "devDependencies": {
         "@types/jest": "26.0.24",
         "ts-jest": "27.0.7",
-        "@types/node": "16.11.12",
+        "@types/node": "15.0.2",
         "typescript": "4.5.2"
     }
 }

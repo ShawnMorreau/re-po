@@ -49,16 +49,14 @@ export type Merge<
     ? Merged
     : Merged extends any[] | NonRecursible
     ? Base
-    : Evaluate<
-          TypeToPreserve & {
-              [K in keyof TypeToMerge]: And<
-                  Options["deep"],
-                  K extends keyof Base ? true : false
-              > extends true
-                  ? Merge<Base[K & keyof Base], TypeToMerge[K], Options>
-                  : TypeToMerge[K]
-          }
-      >
+    : TypeToPreserve & {
+          [K in keyof TypeToMerge]: And<
+              Options["deep"],
+              K extends keyof Base ? true : false
+          > extends true
+              ? Merge<Base[K & keyof Base], TypeToMerge[K], Options>
+              : TypeToMerge[K]
+      }
 
 export type FromEntries<
     Entries extends Entry[],
