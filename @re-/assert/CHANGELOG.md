@@ -1,5 +1,17 @@
 # @re-/assert
 
+## 0.4.0
+
+### Minor Changes
+
+-   7eb5576: Add support for async benches.
+
+### Patch Changes
+
+-   Updated dependencies [7eb5576]
+    -   @re-/node@2.2.0
+    -   @re-/tools@2.2.0
+
 ## 0.3.2
 
 ### Patch Changes
