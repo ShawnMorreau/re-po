@@ -14,5 +14,8 @@
                 "unicorn/no-lonely-if": "off"
             }
         }
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

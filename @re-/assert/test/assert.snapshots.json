@@ -6,5 +6,10 @@
         "toFileUpdate": {
             "re": "oldValue"
         }
+    },
+    "snap.test.ts": {
+        "shawnSnap": {
+            "re": "dew"
+        }
     }
 }

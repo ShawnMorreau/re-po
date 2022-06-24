@@ -37,7 +37,7 @@ export const compareToBaseline = (
         const delta = ((result.n - baseline.n) / baseline.n) * 100
         const formattedDelta = `${delta.toFixed(2)}%`
         if (delta > config.benchPercentThreshold) {
-            const message = `'${name}' exceeded baseline by ${formattedDelta} (treshold is ${config.benchPercentThreshold}%).`
+            const message = `'${name}' exceeded baseline by ${formattedDelta} (threshold is ${config.benchPercentThreshold}%).`
             console.error(`📈 ${message}`)
             if (config.benchErrorOnThresholdExceeded) {
                 process.exitCode = 1
