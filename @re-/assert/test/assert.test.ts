@@ -1,7 +1,9 @@
 import { strict } from "node:assert"
 import { join } from "node:path"
 import { dirName, readJson, writeJson } from "@re-/node"
+import { beforeEach } from "mocha"
 import { assert } from "../src/index.js"
+import { doStuff } from "./metaTests/snapScript.js"
 
 const n = 5
 const o = { re: "do" }
@@ -406,3 +408,10 @@ describe("Snapshots Using Files", () => {
         })
     })
 })
+describe("poogers", () => {
+    before(() => {
+        doStuff()
+    })
+    it("does", () => {})
+})
+//ts-node run file
